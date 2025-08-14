@@ -1,7 +1,7 @@
-from database import get_db
+from database import DatabaseConfig
 
-async def create_user(user, password_hash):
-    db = await get_db()
+async def create_user(db:DatabaseConfig, user, password_hash):
+   
     try:
         async with db.pool.acquire() as conn:
             await conn.execute("""
@@ -12,8 +12,8 @@ async def create_user(user, password_hash):
         print('Error',e)
 
 
-async def get_users():
-    db = await get_db()
+async def get_users(db:DatabaseConfig):
+    
     try:
         async with db.pool.acquire() as conn:
             users = await conn.fetch("""
@@ -23,8 +23,8 @@ async def get_users():
     except Exception as e:
         print('Error',e)
 
-async def update_user(user_id:int, new_username, new_password):
-    db = await get_db()
+async def update_user(db:DatabaseConfig, user_id:int, new_username, new_password):
+    
     try:
         async with db.pool.acquire() as conn:
             if new_username and new_password:
@@ -51,8 +51,8 @@ async def update_user(user_id:int, new_username, new_password):
         print('Error', e)
 
 
-async def get_user_by_id(user_id):
-    db = await get_db()
+async def get_user_by_id(db:DatabaseConfig, user_id):
+    
     try:
         async with db.pool.acquire() as conn:
             user = await conn.fetch("""
@@ -63,8 +63,8 @@ async def get_user_by_id(user_id):
     except Exception as e:
         print('Error', e)
 
-async def delete_user(user_id):
-    db = await get_db()
+async def delete_user(db:DatabaseConfig, user_id):
+    
     try:
         async with db.pool.acquire() as conn:
             result = await conn.execute("""
@@ -74,3 +74,14 @@ async def delete_user(user_id):
         return result
     except Exception as e:
         print('Error',e)
+
+async def create_task(db:DatabaseConfig, title:str, description:str, user_id:str):
+    
+    try:
+        async with db.pool.acquire() as conn:
+            await conn.execute("""
+                INSERT INTO todos(title, description, user_id)
+                VALUES($1, $2, $3)
+        """, title, description, user_id)
+    except Exception as e:
+        print('Error:',e)

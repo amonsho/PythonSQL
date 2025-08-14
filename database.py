@@ -46,15 +46,15 @@ class DatabaseConfig:
             print('Error',e)
 
 
-async def get_db() -> DatabaseConfig:
-    try:
-        db=DatabaseConfig(
-            user='postgres',
-            password='Am.on$sh_op',
-            db_name='todo'
-        )
-        await db.connect()
-        await db.create_table()
-        return db
-    except Exception as e:
-        print('Error',e)
+# async def get_db() -> DatabaseConfig:
+#     try:
+#         db=DatabaseConfig(
+#             user='postgres',
+#             password='Am.on$sh_op',
+#             db_name='todo'
+#         )
+#         await db.connect()
+#         await db.create_table()
+#         return db
+#     except Exception as e:
+#         print('Error',e)
