@@ -27,28 +27,28 @@ Select action:
     if choice == '1':
         username = input('Enter your username: ')
         password = input('Enter your password: ')
-        await create_user(username,password)
+        await create_user(db, username, password)
         print('User is created succsessfully')
 
     elif choice == '2':
-        users = await get_users()
+        users = await get_users(db)
         print(users)
 
     elif choice == '3':
         user_id = int(input('Enter User ID: '))
-        user = await get_user_by_id(user_id)
+        user = await get_user_by_id(db,user_id)
         print(user)
 
     elif choice == '4':
         user_id = int(input('Enter USer ID: '))
         new_username = input('Enter new username: ')
         new_password = input('Enter new password: ')
-        await update_user(user_id, new_username, new_password)
+        await update_user(db,user_id, new_username, new_password)
         print('User update successfully')
 
     elif choice == '5':
         user_id = int(input('Enter ID to delete: '))
-        result= await delete_user(user_id)
+        result= await delete_user(db,user_id)
         print(result)
 
     elif choice == '6':
